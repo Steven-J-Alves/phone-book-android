@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#00BCD4"
+    tools:context=".New">
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="#BCC0C0"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="New"
+            android:padding="10dp"
+            android:background="#B8B0B0"
+            android:layout_marginBottom="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <ImageView
+            android:id="@+id/galeryPhotoId"
+            android:layout_marginBottom="35dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_camera_alt_black_24dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+        </ImageView>
+
+        <EditText
+            android:layout_marginBottom="15dp"
+            android:id="@+id/fullName"
+            android:hint="Full Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+
+        <EditText
+            android:layout_marginBottom="15dp"
+            android:id="@+id/phoneNumberId"
+            android:hint="Phone Number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+
+        <EditText
+            android:id="@+id/emailId"
+            android:layout_marginBottom="15dp"
+            android:hint="Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+
+        <EditText
+            android:id="@+id/birthdayId"
+            android:layout_marginBottom="50dp"
+            android:hint="Birthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnCancelId"
+                android:text="Cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+
+            <Button
+                android:id="@+id/btnOkId"
+                android:text="OK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
