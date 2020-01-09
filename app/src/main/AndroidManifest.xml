@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.stevealves.phonebooktp">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".New"></activity>
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Favorite"
+            android:parentActivityName=".ListaContactos"
+            android:label="Favoritos"/>
+        <activity android:name=".Update"
+            android:parentActivityName=".ListaContactos"
+            android:label="Update"/>
+        <activity android:name=".New"
+            android:parentActivityName=".ListaContactos"
+            android:label="New"/>
         <activity android:name=".ListaContactos" />
         <activity android:name=".MainActivity">
             <intent-filter>

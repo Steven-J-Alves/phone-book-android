@@ -1,6 +1,6 @@
-package com.stevealves.phonebooktp.contacto;
+package com.stevealves.phonebooktp.model;
 
-import com.stevealves.phonebooktp.R;
+import android.graphics.Bitmap;
 
 import java.io.Serializable;
 
@@ -10,25 +10,32 @@ public class Contacto implements Serializable {
     private String phoneNumber;
     private String email;
     private String birthdayDate;
-    private int id;
-    private int img;
+    private Bitmap img;
 
-    public Contacto(
-            String fullName,
-            String phoneNumber, String email, String birthdayDate, int id, int img) {
-        this.img = img;
+    private Boolean isFavorite = false;
+
+    public Contacto(String fullName, String phoneNumber, String email, String birthdayDate, Bitmap img) {
+
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.birthdayDate = birthdayDate;
-        this.id = id;
+        this.img = img;
     }
 
-    public int getImg() {
+    public Boolean getFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public Bitmap getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(Bitmap img) {
         this.img = img;
     }
 
@@ -38,14 +45,6 @@ public class Contacto implements Serializable {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getPhoneNumber() {

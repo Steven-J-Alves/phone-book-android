@@ -1,21 +1,19 @@
 package com.stevealves.phonebooktp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stevealves.phonebooktp.adapter.ListaContactosAdapter;
-import com.stevealves.phonebooktp.common.common;
-import com.stevealves.phonebooktp.contacto.Contacto;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.stevealves.phonebooktp.utils.Common;
 
 public class ListaContactos extends AppCompatActivity {
 
@@ -30,9 +28,9 @@ public class ListaContactos extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.main_recycler_id);
 
-        ListaContactosAdapter ListaContactosAdapter = new ListaContactosAdapter(this, common.listaContactos);
+        ListaContactosAdapter listacontactosadapter = new ListaContactosAdapter(this, Common.listaContactos);
 
-        recyclerView.setAdapter(ListaContactosAdapter);
+        recyclerView.setAdapter(listacontactosadapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.buttonMainId);
@@ -47,5 +45,24 @@ public class ListaContactos extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu_action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.main_settings_action_bar_id:
+                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                return true;
+            case R.id.main_favorite_action_bar_id:
+                Intent intent = new Intent(getApplicationContext(), Favorite.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

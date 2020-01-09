@@ -1,6 +1,9 @@
 package com.stevealves.phonebooktp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -8,13 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.stevealves.phonebooktp.R;
-import com.stevealves.phonebooktp.contacto.Contacto;
+import com.stevealves.phonebooktp.Update;
+import com.stevealves.phonebooktp.utils.Common;
+import com.stevealves.phonebooktp.model.Contacto;
 
 import java.util.List;
 
@@ -33,19 +37,32 @@ public class ListaContactosAdapter extends RecyclerView.Adapter<ListaContactosAd
     public ListaContactosHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         //do this first
-
         LayoutInflater inflate = LayoutInflater.from(context);
         View view = inflate.inflate(R.layout.item_list_recycler, parent, false);
         return new ListaContactosHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListaContactosHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListaContactosHolder holder, final int position) {
+
         holder.name.setText(contactos.get(position).getFullName());
         holder.number.setText(contactos.get(position).getPhoneNumber());
-        holder.img.setImageResource(contactos.get(position).getImg());
-
         holder.position = position;
+
+        if(Common.listaContactos.get(position).getImg() != null){
+            holder.img.setImageBitmap(contactos.get(position).getImg());
+        } else {
+            holder.img.setImageResource(R.drawable.ic_person_outline_black_24dp);
+        }
+
+        holder.arrowNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Update.class);
+                intent.putExtra("id", position);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -54,7 +71,6 @@ public class ListaContactosAdapter extends RecyclerView.Adapter<ListaContactosAd
     }
 
     public class ListaContactosHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
-        //from here we processed to onBindViewHolder
 
         ImageView img;
         ImageView arrowNew;
@@ -71,51 +87,67 @@ public class ListaContactosAdapter extends RecyclerView.Adapter<ListaContactosAd
             arrowNew = itemView.findViewById(R.id.arrow_custum_view_id);
 
             itemView.setOnCreateContextMenuListener(this);
-
-            //simple click
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(context, "Click "  + name.getText(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            
         }
 
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenu.ContextMenuInfo menuInfo) {
-            //add CALL item to menu and implement click
             menu.add(0, itemView.getId(), 0, "Call").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    Toast.makeText(context, "CALL " + position, Toast.LENGTH_SHORT).show();
+                    String phoneNumber = contactos.get(position).getPhoneNumber();
+                    call(phoneNumber);
                     return false;
                 }
             });
-            //add SMS item to menu and implement click
             menu.add(0, itemView.getId(), 0, "SMS").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    Toast.makeText(context, "SMS " + position, Toast.LENGTH_SHORT).show();
+                    String phoneNumber = contactos.get(position).getPhoneNumber();
+                    sms(phoneNumber);
                     return false;
                 }
             });
-            //add SMS item to menu and implement click
             menu.add(0, itemView.getId(), 0, "Favorite").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    Toast.makeText(context, "Favorite " + position, Toast.LENGTH_SHORT).show();
+                    addFavorite(getAdapterPosition());
                     return false;
                 }
             });
-            //add SMS item to menu and implement click
             menu.add(0, itemView.getId(), 0, "Remove").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    Toast.makeText(context, "Remove " + position, Toast.LENGTH_SHORT).show();
+                    remove(position);
                     return false;
                 }
             });
         }
+    }
+
+    public void call(String phoneNumber){
+        String uri = "tel:" + phoneNumber ;
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse(uri));
+        context.startActivity(intent);
+    }
+
+    public void sms(String phoneNumber){
+        Uri smsUri = Uri.parse("tel:" + phoneNumber);
+        Intent intent = new Intent(Intent.ACTION_VIEW, smsUri);
+        intent.setType("vnd.android-dir/mms-sms");
+        context.startActivity(intent);
+    }
+
+    public void addFavorite(int position){
+        Common.listaContactos.get(position).setFavorite(true);
+    }
+
+    public void remove(int position){
+//            //Common.listaContactos.remove(position).getFavorite();
+//            Common.listaContactos.remove(position);
+//            this.notifyDataSetChanged();
+
     }
 }

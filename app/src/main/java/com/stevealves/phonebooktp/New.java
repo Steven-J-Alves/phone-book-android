@@ -1,10 +1,13 @@
 package com.stevealves.phonebooktp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -13,39 +16,39 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.stevealves.phonebooktp.common.common;
-import com.stevealves.phonebooktp.contacto.Contacto;
+import com.stevealves.phonebooktp.utils.Common;
+import com.stevealves.phonebooktp.model.Contacto;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class New extends AppCompatActivity {
 
-    private ImageView imgGalery;
-
+    // Views
     private EditText fullName;
     private EditText phoneNumber;
     private EditText Email;
     private EditText Birthday;
+    private ImageView imgGalery;
 
     private Button btnCancel;
     private Button btnOk;
 
-    String fullname;
-    String phonemunber;
-    String email;
-    String birthday;
+    private AlertDialog.Builder dialog;
+
+    Bitmap photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new);
 
-        imgGalery = findViewById(R.id.galeryPhotoId);
         fullName = findViewById(R.id.fullName);
         phoneNumber = findViewById(R.id.phoneNumberId);
         Email = findViewById(R.id.emailId);
         Birthday = findViewById(R.id.birthdayId);
+        imgGalery = findViewById(R.id.galeryPhotoId);
+
 
         btnCancel = findViewById(R.id.btnCancelId);
         btnOk = findViewById(R.id.btnOkId);
@@ -59,23 +62,49 @@ public class New extends AppCompatActivity {
             }
         });
 
+        //SAVE CONTACTC
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 fullname = fullName.getText().toString();
-                 phonemunber = phoneNumber.getText().toString();
-                 email = Email.getText().toString();
-                 birthday = Birthday.getText().toString();
-                //String photo = imgGalery.getText().toString();
 
-                addItensList();
-                //Toast.makeText(getApplicationContext(), fullname, Toast.LENGTH_LONG).show();
+                String fullname = fullName.getText().toString();
+                String phonemunber = phoneNumber.getText().toString();
+                String email = Email.getText().toString();
+                String birthday = Birthday.getText().toString();
+
+                Common.listaContactos.add(new Contacto(fullname, phonemunber, email, birthday, photo));
+
+                Intent intent = new Intent(getApplicationContext(),  ListaContactos.class);
+                startActivity(intent);
+                finish();
             }
         });
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                dialog = new AlertDialog.Builder(New.this);
+
+                dialog.setMessage("Deseja Cancelar?");
+
+                dialog.setNegativeButton("Não",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getApplicationContext(), "Preenche o formulário...", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                dialog.setPositiveButton("Sim",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+
+                dialog.create();
+                dialog.show();
             }
         });
     }
@@ -90,21 +119,16 @@ public class New extends AppCompatActivity {
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 imgGalery.setImageBitmap(selectedImage);
+                photo = selectedImage;
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
             }
-        }else {
+        } else {
             Toast.makeText(getApplicationContext(), "You haven't picked Image",Toast.LENGTH_LONG).show();
         }
     }
 
-    private void addItensList() {
-        //Contacto contacto = new Contacto(fullname, phoneNumber, email, birthday, 345, photo);
-        //ommon.listaContactos.add(contacto);
-        Contacto contact1 = new Contacto("steven2", "34354534534", "stevenemail@gmail.com", "05/12/19", 345, R.drawable.ic_keyboard_arrow_right_black_24dp);
-        common.listaContactos.add(contact1);
-    }
 
 
 }

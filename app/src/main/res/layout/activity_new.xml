@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#00BCD4"
+    android:background="#03A9F4"
     tools:context=".New">
 
     <LinearLayout
@@ -22,21 +22,22 @@
             android:text="New"
             android:padding="10dp"
             android:background="#B8B0B0"
-            android:layout_marginBottom="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </TextView>
 
         <ImageView
+            android:layout_marginTop="10dp"
             android:id="@+id/galeryPhotoId"
-            android:layout_marginBottom="35dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_camera_alt_black_24dp"
             android:layout_width="100dp"
+            android:layout_marginBottom="10dp"
             android:layout_height="100dp">
         </ImageView>
 
         <EditText
+            android:inputType="textAutoComplete"
             android:layout_marginBottom="15dp"
             android:id="@+id/fullName"
             android:hint="Full Name"
@@ -47,12 +48,14 @@
         <EditText
             android:layout_marginBottom="15dp"
             android:id="@+id/phoneNumberId"
+            android:inputType="number"
             android:hint="Phone Number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </EditText>
 
         <EditText
+            android:inputType="textEmailAddress"
             android:id="@+id/emailId"
             android:layout_marginBottom="15dp"
             android:hint="Email"
