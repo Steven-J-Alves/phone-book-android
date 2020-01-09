@@ -131,10 +131,9 @@ public class ListaFavoritosAdapter  extends RecyclerView.Adapter<ListaFavoritosA
     }
 
     public void RemoveContactFav(int position){
-//        if(contactosFav.get(position).getFavorite()){
-//            contactosFav.remove(position);
-//            this.notifyDataSetChanged();
-//        }
+        Common.listaContactos.get(position).setFavorite(false);
+        this.notifyDataSetChanged();
+
     }
 
 

@@ -1,17 +1,24 @@
 package com.stevealves.phonebooktp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.icu.util.Calendar;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -22,7 +29,7 @@ import com.stevealves.phonebooktp.model.Contacto;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-public class New extends AppCompatActivity {
+public class New extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     // Views
     private EditText fullName;
@@ -38,6 +45,7 @@ public class New extends AppCompatActivity {
 
     Bitmap photo;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +70,15 @@ public class New extends AppCompatActivity {
             }
         });
 
+        Birthday.setOnTouchListener(new View.OnTouchListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                showDatePickerDialog();
+                return false;
+            }
+        });
+
         //SAVE CONTACTC
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +87,7 @@ public class New extends AppCompatActivity {
                 String fullname = fullName.getText().toString();
                 String phonemunber = phoneNumber.getText().toString();
                 String email = Email.getText().toString();
+
                 String birthday = Birthday.getText().toString();
 
                 Common.listaContactos.add(new Contacto(fullname, phonemunber, email, birthday, photo));
@@ -129,6 +147,23 @@ public class New extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void showDatePickerDialog(){
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
+    }
 
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        month = month + 1;
+        String data = dayOfMonth + "/" + month + "/" + year;
+        Birthday.setText(data);
+    }
 }

@@ -112,7 +112,7 @@ public class ListaContactosAdapter extends RecyclerView.Adapter<ListaContactosAd
             menu.add(0, itemView.getId(), 0, "Favorite").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    addFavorite(getAdapterPosition());
+                    addFavorite(position);
                     return false;
                 }
             });
@@ -145,9 +145,7 @@ public class ListaContactosAdapter extends RecyclerView.Adapter<ListaContactosAd
     }
 
     public void remove(int position){
-//            //Common.listaContactos.remove(position).getFavorite();
-//            Common.listaContactos.remove(position);
-//            this.notifyDataSetChanged();
-
+        Common.listaContactos.remove(position);
+        this.notifyDataSetChanged();
     }
 }
