@@ -124,7 +124,12 @@ public class Update extends AppCompatActivity {
         phoneNumberUp.setText(phonemunber);
         EmailUp.setText(email);
         BirthdayUp.setText(birthday);
-        imgGaleryUp.setImageBitmap(photo);
+
+        if(Common.listaContactos.get(id).getImg() != null){
+            imgGaleryUp.setImageBitmap(photo);
+        } else {
+            imgGaleryUp.setImageResource(R.drawable.ic_camera_alt_black_24dp);
+        }
     }
 
     private void Update(){
@@ -134,6 +139,7 @@ public class Update extends AppCompatActivity {
         contacto.setPhoneNumber(phoneNumberUp.getText().toString());
         contacto.setEmail(EmailUp.getText().toString());
         contacto.setBirthdayDate(BirthdayUp.getText().toString());
+        contacto.setImg(photo);
 
         Common.listaContactos.set(id, contacto);
         Intent intent = new Intent(getApplicationContext(), ListaContactos.class);

@@ -11,6 +11,7 @@ public class Contacto implements Serializable {
     private String email;
     private String birthdayDate;
     private Bitmap img;
+    private String endereco;
 
     private Boolean isFavorite = false;
 

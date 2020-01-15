@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#03A9F4"
     tools:context=".New">
 
     <LinearLayout
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:background="#BCC0C0"
+        android:background="#03A9F4"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -21,7 +20,7 @@
             android:textStyle="bold"
             android:text="New"
             android:padding="10dp"
-            android:background="#B8B0B0"
+            android:background="#048DC9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </TextView>
@@ -81,6 +80,7 @@
             <Button
                 android:id="@+id/btnCancelId"
                 android:text="Cancel"
+                android:background="#F44336"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </Button>
@@ -88,6 +88,7 @@
             <Button
                 android:id="@+id/btnOkId"
                 android:text="OK"
+                android:background="#4CAF50"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </Button>
