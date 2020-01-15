@@ -18,8 +18,12 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.stevealves.phonebooktp.R;
+import com.stevealves.phonebooktp.model.Contacto;
 import com.stevealves.phonebooktp.utils.Common;
 
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
 
@@ -71,8 +75,7 @@ public class ListaFavoritosAdapter  extends RecyclerView.Adapter<ListaFavoritosA
                 count++;
             }
         }
-        //long count =  Common.listaContactos.stream().filter(i -> i.getFavorite()).count();
-        //int i = (int) count;
+        //long count =  Common.listaContactos.stream().filter((i) -> i.getFavorite()).count();
         return count;
     }
 
