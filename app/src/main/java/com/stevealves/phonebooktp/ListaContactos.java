@@ -42,7 +42,6 @@ public class ListaContactos extends AppCompatActivity {
                 startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
             }
         });
-
     }
 
     @Override

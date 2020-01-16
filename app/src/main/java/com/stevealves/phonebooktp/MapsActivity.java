@@ -21,6 +21,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.stevealves.phonebooktp.utils.Common;
 import com.stevealves.phonebooktp.utils.Permissoes;
 
@@ -39,10 +40,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //conf location listener para ouvir as atualiazoes da localizacao do usuario
     private LocationListener locationListener;
 
+    MarkerOptions meuEndereco, contactoEndereco;
+
     int id;
     private Double lat;
     private Double log;
     private String nome;
+
+    double MyLat;
+    double MyLog;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -57,7 +64,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //marketOptions
+        //meuEndereco = new MarkerOptions().position(new LatLng(lat, log)).title("Endereco de " + nome);
+        //contactoEndereco = new MarkerOptions().position(new LatLng(MyLat, MyLog)).title("Meu Endereco");
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -74,13 +86,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //Log.d("localizacao", "onLocationChanged: " + location.toString());
                 //Toast.makeText(getApplicationContext(), "hereeeeee", Toast.LENGTH_LONG).show();
 
-                double Mylatitude = location.getLatitude();
-                double Mylongitude= location.getLongitude();
+                Double Mylatitude = location.getLatitude();
+                Double Mylongitude = location.getLongitude();
 
-                //mMap.clear();
                 LatLng meuEndereco = new LatLng(Mylatitude, Mylongitude);
                 mMap.addMarker(new MarkerOptions().position(meuEndereco).title("Meu Endereço"));
-                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(meuEndereco, 10));
 
             }
 
@@ -114,7 +124,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getData();
 
         // localizacao do contact
-        // mMap.clear();
         LatLng enderecoContact = new LatLng(lat, -log);
         mMap.addMarker(new MarkerOptions().position(enderecoContact).title("Endereço de " + nome));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(enderecoContact, 10));
@@ -161,9 +170,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void getData(){
         id = getIntent().getIntExtra("id", 0);
+
         lat = Common.listaContactos.get(id).getLatitude();
         log = Common.listaContactos.get(id).getLongitude();
-
         nome = Common.listaContactos.get(id).getFullName();
     }
 
