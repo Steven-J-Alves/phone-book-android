@@ -31,6 +31,9 @@ public class Update extends AppCompatActivity {
     private EditText BirthdayUp;
     private ImageView imgGaleryUp;
 
+    private EditText latitudeEdtUp;
+    private EditText longitudeEdtUp;
+
     private Button btnCancelUpdate;
     private Button btnUpdate;
 
@@ -54,6 +57,9 @@ public class Update extends AppCompatActivity {
         EmailUp = findViewById(R.id.emailIdUp);
         BirthdayUp = findViewById(R.id.birthdayIdUp);
         imgGaleryUp = findViewById(R.id.galeryPhotoIdUp);
+
+        latitudeEdtUp = findViewById(R.id.latitudeUpId);
+        longitudeEdtUp = findViewById(R.id.longitudeUpId);
 
         btnCancelUpdate = findViewById(R.id.btnCancelUpdateId);
         btnUpdate = findViewById(R.id.btnUpdateId);

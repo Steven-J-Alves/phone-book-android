@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.stevealves.phonebooktp.MapsActivity;
 import com.stevealves.phonebooktp.R;
 import com.stevealves.phonebooktp.Update;
 import com.stevealves.phonebooktp.utils.Common;
@@ -90,7 +91,6 @@ public class ListaContactosAdapter extends RecyclerView.Adapter<ListaContactosAd
             
         }
 
-
         @Override
         public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenu.ContextMenuInfo menuInfo) {
             menu.add(0, itemView.getId(), 0, "Call").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -106,6 +106,13 @@ public class ListaContactosAdapter extends RecyclerView.Adapter<ListaContactosAd
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     String phoneNumber = contactos.get(position).getPhoneNumber();
                     sms(phoneNumber);
+                    return false;
+                }
+            });
+            menu.add(0, itemView.getId(), 0, "Map").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    getMap(position);
                     return false;
                 }
             });
@@ -147,5 +154,10 @@ public class ListaContactosAdapter extends RecyclerView.Adapter<ListaContactosAd
     public void remove(int position){
         Common.listaContactos.remove(position);
         this.notifyDataSetChanged();
+    }
+
+    public void getMap(int position){
+        Intent intent = new Intent(context, MapsActivity.class);
+        context.startActivity(intent);
     }
 }

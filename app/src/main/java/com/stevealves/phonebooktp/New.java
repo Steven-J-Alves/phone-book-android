@@ -38,6 +38,9 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
     private EditText Birthday;
     private ImageView imgGalery;
 
+    private EditText latitudeEdt;
+    private EditText longitudeEdt;
+
     private Button btnCancel;
     private Button btnOk;
 
@@ -57,6 +60,8 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
         Birthday = findViewById(R.id.birthdayId);
         imgGalery = findViewById(R.id.galeryPhotoId);
 
+        latitudeEdt = findViewById(R.id.latitudeId);
+        longitudeEdt = findViewById(R.id.longitudeId);
 
         btnCancel = findViewById(R.id.btnCancelId);
         btnOk = findViewById(R.id.btnOkId);
