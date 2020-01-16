@@ -80,7 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //mMap.clear();
                 LatLng meuEndereco = new LatLng(Mylatitude, Mylongitude);
                 mMap.addMarker(new MarkerOptions().position(meuEndereco).title("Meu Endereço"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(meuEndereco, 10));
+                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(meuEndereco, 10));
 
             }
 
@@ -163,6 +163,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         id = getIntent().getIntExtra("id", 0);
         lat = Common.listaContactos.get(id).getLatitude();
         log = Common.listaContactos.get(id).getLongitude();
+
         nome = Common.listaContactos.get(id).getFullName();
     }
 

@@ -45,6 +45,10 @@ public class Update extends AppCompatActivity {
     String email;
     String birthday;
     Bitmap photo;
+
+    String lat;
+    String log;
+
     int id;
 
     @Override
@@ -123,6 +127,9 @@ public class Update extends AppCompatActivity {
         birthday = Common.listaContactos.get(id).getBirthdayDate();
         photo = Common.listaContactos.get(id).getImg();
 
+        lat = Common.listaContactos.get(id).getLatitude().toString();
+        log = Common.listaContactos.get(id).getLongitude().toString();
+
     }
 
     private void setData(){
@@ -136,6 +143,9 @@ public class Update extends AppCompatActivity {
         } else {
             imgGaleryUp.setImageResource(R.drawable.ic_camera_alt_black_24dp);
         }
+
+        latitudeEdtUp.setText(lat);
+        longitudeEdtUp.setText(log);
     }
 
     private void Update(){
@@ -145,6 +155,8 @@ public class Update extends AppCompatActivity {
         contacto.setPhoneNumber(phoneNumberUp.getText().toString());
         contacto.setEmail(EmailUp.getText().toString());
         contacto.setBirthdayDate(BirthdayUp.getText().toString());
+        contacto.setLatitude(Double.parseDouble(latitudeEdtUp.getText().toString()));
+        contacto.setLongitude(Double.parseDouble(longitudeEdtUp.getText().toString()));
         contacto.setImg(photo);
 
         Common.listaContactos.set(id, contacto);
