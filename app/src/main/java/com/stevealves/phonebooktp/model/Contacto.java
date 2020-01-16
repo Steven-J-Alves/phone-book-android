@@ -11,17 +11,21 @@ public class Contacto implements Serializable {
     private String email;
     private String birthdayDate;
     private Bitmap img;
-    private String endereco;
+
+    private Double latitude;
+    private Double longitude;
 
     private Boolean isFavorite = false;
 
-    public Contacto(String fullName, String phoneNumber, String email, String birthdayDate, Bitmap img) {
+    public Contacto(String fullName, String phoneNumber, String email, String birthdayDate, Bitmap img, double latitude, double longitude) {
 
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.birthdayDate = birthdayDate;
         this.img = img;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public Boolean getFavorite() {
@@ -70,5 +74,21 @@ public class Contacto implements Serializable {
 
     public void setBirthdayDate(String birthdayDate) {
         this.birthdayDate = birthdayDate;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 }

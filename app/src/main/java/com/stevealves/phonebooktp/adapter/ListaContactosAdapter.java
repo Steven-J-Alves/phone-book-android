@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ public class ListaContactosAdapter extends RecyclerView.Adapter<ListaContactosAd
 
         holder.name.setText(contactos.get(position).getFullName());
         holder.number.setText(contactos.get(position).getPhoneNumber());
+
         holder.position = position;
 
         if(Common.listaContactos.get(position).getImg() != null){
@@ -158,6 +160,7 @@ public class ListaContactosAdapter extends RecyclerView.Adapter<ListaContactosAd
 
     public void getMap(int position){
         Intent intent = new Intent(context, MapsActivity.class);
+        intent.putExtra("id", position);
         context.startActivity(intent);
     }
 }

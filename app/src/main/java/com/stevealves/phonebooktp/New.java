@@ -92,10 +92,13 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 String fullname = fullName.getText().toString();
                 String phonemunber = phoneNumber.getText().toString();
                 String email = Email.getText().toString();
-
                 String birthday = Birthday.getText().toString();
 
-                Common.listaContactos.add(new Contacto(fullname, phonemunber, email, birthday, photo));
+                double lat = Double.parseDouble(latitudeEdt.getText().toString());
+                double longi = Double.parseDouble(longitudeEdt.getText().toString());
+
+                Common.listaContactos.add(new Contacto(fullname, phonemunber, email, birthday, photo, lat, longi));
+                //Toast.makeText(getApplicationContext(), (int) (lat + longi), Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getApplicationContext(),  ListaContactos.class);
                 startActivity(intent);
@@ -106,9 +109,7 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 dialog = new AlertDialog.Builder(New.this);
-
                 dialog.setMessage("Deseja Cancelar?");
 
                 dialog.setNegativeButton("Não",
@@ -142,6 +143,7 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 imgGalery.setImageBitmap(selectedImage);
+                // setting the photo to the contact
                 photo = selectedImage;
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -152,6 +154,7 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
         }
     }
 
+    // Date Picket Configuration
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void showDatePickerDialog(){
         DatePickerDialog datePickerDialog = new DatePickerDialog(
