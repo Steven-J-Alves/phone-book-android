@@ -13,11 +13,12 @@
         android:background="#03A9F4"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <TextView
             android:textSize="20dp"
             android:textStyle="bold"
+            android:textColor="#fff"
             android:text="New"
             android:padding="10dp"
             android:background="#048DC9"
@@ -57,6 +58,7 @@
             android:inputType="textEmailAddress"
             android:id="@+id/emailId"
             android:layout_marginBottom="15dp"
+
             android:hint="Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -64,23 +66,52 @@
 
         <EditText
             android:id="@+id/birthdayId"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="10dp"
             android:hint="Birthday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </EditText>
 
         <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/latitudeId"
+                android:hint="Latitude"
+                android:inputType="numberDecimal"
+                android:layout_marginRight="2dp"
+                android:layout_width="110dp"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content">
+            </EditText>
+
+            <EditText
+                android:id="@+id/longitudeId"
+                android:hint="Longitude"
+                android:inputType="numberDecimal"
+                android:layout_width="110dp"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content">
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/btnCancelId"
                 android:text="Cancel"
                 android:background="#F44336"
+                android:layout_marginRight="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </Button>

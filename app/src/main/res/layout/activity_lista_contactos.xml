@@ -14,7 +14,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonMainId"
         android:layout_width="wrap_content"
-        app:backgroundTint="#03A9F4"
+        app:backgroundTint="#048DC9"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="25dp"

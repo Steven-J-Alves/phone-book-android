@@ -46,12 +46,12 @@ public class ListaFavoritosAdapter  extends RecyclerView.Adapter<ListaFavoritosA
     @Override
     public void onBindViewHolder(@NonNull ListaFavoritosHolder holder, final int position) {
 
-           if (Common.listaContactos.get(position).getFavorite()){
+            if (Common.listaContactos.get(position).getFavorite()) {
                 holder.nameFav.setText(Common.listaContactos.get(position).getFullName());
                 holder.numberFav.setText(Common.listaContactos.get(position).getPhoneNumber());
                 holder.position = position;
 
-                if(Common.listaContactos.get(position).getImg() != null){
+                if (Common.listaContactos.get(position).getImg() != null) {
                     holder.imgFav.setImageBitmap(Common.listaContactos.get(position).getImg());
                 } else {
                     holder.imgFav.setImageResource(R.drawable.ic_person_outline_black_24dp);
@@ -63,7 +63,8 @@ public class ListaFavoritosAdapter  extends RecyclerView.Adapter<ListaFavoritosA
                         RemoveContactFav(position);
                     }
                 });
-           }
+            }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
