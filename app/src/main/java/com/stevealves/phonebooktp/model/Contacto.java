@@ -15,6 +15,8 @@ public class Contacto implements Serializable {
     private Double latitude;
     private Double longitude;
 
+    private Long id;
+
     private Boolean isFavorite = false;
 
     public Contacto(String fullName, String phoneNumber, String email, String birthdayDate, Bitmap img, double latitude, double longitude) {
@@ -26,6 +28,16 @@ public class Contacto implements Serializable {
         this.img = img;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public Contacto(){}
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Boolean getFavorite() {

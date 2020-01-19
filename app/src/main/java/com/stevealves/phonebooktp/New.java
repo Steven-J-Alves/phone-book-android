@@ -15,6 +15,7 @@ import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.stevealves.phonebooktp.DAO.ContactosDao;
 import com.stevealves.phonebooktp.utils.Common;
 import com.stevealves.phonebooktp.model.Contacto;
 
@@ -84,7 +86,7 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
-        //SAVE CONTACTC
+        //SAVE CONTACT
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,12 +95,14 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 String phonemunber = phoneNumber.getText().toString();
                 String email = Email.getText().toString();
                 String birthday = Birthday.getText().toString();
+                //Bitmap bitmap = ((BitmapDrawable)imgGalery.getDrawable()).getBitmap();
 
                 double lat = Double.parseDouble(latitudeEdt.getText().toString());
                 double longi = Double.parseDouble(longitudeEdt.getText().toString());
 
-                Common.listaContactos.add(new Contacto(fullname, phonemunber, email, birthday, photo, lat, longi));
-                //Toast.makeText(getApplicationContext(), (int) (lat + longi), Toast.LENGTH_SHORT).show();
+                ContactosDao contactosDao = new ContactosDao(getApplicationContext());
+                contactosDao.salvar(new Contacto(fullname, phonemunber, email, birthday, photo, lat, longi));
+                Log.d("lll", "DEPOIS DE INTANCIAR CANTCAO NO NEW e SALVAR CONTACTO");
 
                 Intent intent = new Intent(getApplicationContext(),  ListaContactos.class);
                 startActivity(intent);
@@ -142,9 +146,10 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 final Uri imageUri = data.getData();
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+
                 imgGalery.setImageBitmap(selectedImage);
-                // setting the photo to the contact
                 photo = selectedImage;
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -166,7 +171,6 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
         );
         datePickerDialog.show();
     }
-
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

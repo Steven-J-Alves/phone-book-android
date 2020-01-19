@@ -12,6 +12,7 @@ public class FeedReaderContract {
     public static class FeedEntry implements BaseColumns {
 
         public static final String TABLE_NAME = "contactos";
+
         public static final String COLUMN_NOME = "nome";
         public static final String COLUMN_PHONE = "phone_number";
         public static final String COLUMN_EMAIL = "email";

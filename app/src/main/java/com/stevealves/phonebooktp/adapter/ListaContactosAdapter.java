@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.stevealves.phonebooktp.DAO.ContactosDao;
 import com.stevealves.phonebooktp.MapsActivity;
 import com.stevealves.phonebooktp.R;
 import com.stevealves.phonebooktp.Update;
@@ -47,24 +48,23 @@ public class ListaContactosAdapter extends RecyclerView.Adapter<ListaContactosAd
     @Override
     public void onBindViewHolder(@NonNull ListaContactosHolder holder, final int position) {
 
-        holder.name.setText(contactos.get(position).getFullName());
-        holder.number.setText(contactos.get(position).getPhoneNumber());
+        Contacto contacto = contactos.get(position);
+
+        holder.name.setText(contacto.getFullName());
+        holder.number.setText(contacto.getPhoneNumber());
 
         holder.position = position;
 
-        if(Common.listaContactos.get(position).getImg() != null){
-            holder.img.setImageBitmap(contactos.get(position).getImg());
+        if(contacto.getImg() != null){
+            holder.img.setImageBitmap(contacto.getImg());
         } else {
             holder.img.setImageResource(R.drawable.ic_person_outline_black_24dp);
         }
 
-        holder.arrowNew.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, Update.class);
-                intent.putExtra("id", position);
-                context.startActivity(intent);
-            }
+        holder.arrowNew.setOnClickListener(v -> {
+            Intent intent = new Intent(context, Update.class);
+            intent.putExtra("id", position);
+            context.startActivity(intent);
         });
     }
 
@@ -121,14 +121,14 @@ public class ListaContactosAdapter extends RecyclerView.Adapter<ListaContactosAd
             menu.add(0, itemView.getId(), 0, "Favorite").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    addFavorite(position);
+                    //addFavorite(position);
                     return false;
                 }
             });
             menu.add(0, itemView.getId(), 0, "Remove").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    remove(position);
+                    //remove(position);
                     return false;
                 }
             });
@@ -149,14 +149,14 @@ public class ListaContactosAdapter extends RecyclerView.Adapter<ListaContactosAd
         context.startActivity(intent);
     }
 
-    public void addFavorite(int position){
+   /* public void addFavorite(int position){
         Common.listaContactos.get(position).setFavorite(true);
-    }
+    }*/
 
-    public void remove(int position){
-        Common.listaContactos.remove(position);
-        this.notifyDataSetChanged();
-    }
+//    public void remove(int position){
+//        Common.listaContactos.remove(position);
+//        this.notifyDataSetChanged();
+//    }
 
     public void getMap(int position){
         Intent intent = new Intent(context, MapsActivity.class);

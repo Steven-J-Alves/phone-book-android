@@ -7,19 +7,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.stevealves.phonebooktp.DAO.ContactosDao;
 import com.stevealves.phonebooktp.adapter.ListaContactosAdapter;
+import com.stevealves.phonebooktp.model.Contacto;
 import com.stevealves.phonebooktp.utils.Common;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListaContactos extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
     static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
+
+    public static List<Contacto> listaContacto = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +36,10 @@ public class ListaContactos extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.main_recycler_id);
 
-        ListaContactosAdapter listacontactosadapter = new ListaContactosAdapter(this, Common.listaContactos);
+        ContactosDao contactosDao = new ContactosDao(getApplicationContext());
+        Log.d("lll", "INTANCIAR no LISTACONTACT");
+
+        ListaContactosAdapter listacontactosadapter = new ListaContactosAdapter(this, contactosDao.getContatos());
 
         recyclerView.setAdapter(listacontactosadapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -50,18 +61,18 @@ public class ListaContactos extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.main_settings_action_bar_id:
-                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
-                return true;
-            case R.id.main_favorite_action_bar_id:
-                Intent intent = new Intent(getApplicationContext(), Favorite.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.main_settings_action_bar_id:
+//                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+//                return true;
+//            case R.id.main_favorite_action_bar_id:
+//                Intent intent = new Intent(getApplicationContext(), Favorite.class);
+//                startActivity(intent);
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 }

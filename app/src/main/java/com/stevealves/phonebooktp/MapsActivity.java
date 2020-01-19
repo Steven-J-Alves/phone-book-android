@@ -121,7 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         // get contact data by position
-        getData();
+        //getData();
 
         // localizacao do contact
         LatLng enderecoContact = new LatLng(lat, -log);
@@ -167,13 +167,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         finish();
         // Implementar AlertDialog
     }
-
-    public void getData(){
-        id = getIntent().getIntExtra("id", 0);
-
-        lat = Common.listaContactos.get(id).getLatitude();
-        log = Common.listaContactos.get(id).getLongitude();
-        nome = Common.listaContactos.get(id).getFullName();
-    }
+//
+//    public void getData(){
+//        id = getIntent().getIntExtra("id", 0);
+//
+//        lat = Common.listaContactos.get(id).getLatitude();
+//        log = Common.listaContactos.get(id).getLongitude();
+//        nome = Common.listaContactos.get(id).getFullName();
+//    }
 
 }

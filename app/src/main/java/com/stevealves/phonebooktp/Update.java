@@ -84,7 +84,7 @@ public class Update extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Update();
+                //Update();
             }
         });
 
@@ -120,15 +120,15 @@ public class Update extends AppCompatActivity {
 
     private void getData(){
         id = getIntent().getIntExtra("id", 0);
-
-        fullname = Common.listaContactos.get(id).getFullName();
-        phonemunber = Common.listaContactos.get(id).getPhoneNumber();
-        email = Common.listaContactos.get(id).getEmail();
-        birthday = Common.listaContactos.get(id).getBirthdayDate();
-        photo = Common.listaContactos.get(id).getImg();
-
-        lat = Common.listaContactos.get(id).getLatitude().toString();
-        log = Common.listaContactos.get(id).getLongitude().toString();
+//
+//        fullname = Common.listaContactos.get(id).getFullName();
+//        phonemunber = Common.listaContactos.get(id).getPhoneNumber();
+//        email = Common.listaContactos.get(id).getEmail();
+//        birthday = Common.listaContactos.get(id).getBirthdayDate();
+//        photo = Common.listaContactos.get(id).getImg();
+//
+//        lat = Common.listaContactos.get(id).getLatitude().toString();
+//        log = Common.listaContactos.get(id).getLongitude().toString();
 
     }
 
@@ -138,31 +138,31 @@ public class Update extends AppCompatActivity {
         EmailUp.setText(email);
         BirthdayUp.setText(birthday);
 
-        if(Common.listaContactos.get(id).getImg() != null){
-            imgGaleryUp.setImageBitmap(photo);
-        } else {
-            imgGaleryUp.setImageResource(R.drawable.ic_camera_alt_black_24dp);
-        }
+//        if(Common.listaContactos.get(id).getImg() != null){
+//            imgGaleryUp.setImageBitmap(photo);
+//        } else {
+//            imgGaleryUp.setImageResource(R.drawable.ic_camera_alt_black_24dp);
+//        }
 
         latitudeEdtUp.setText(lat);
         longitudeEdtUp.setText(log);
     }
 
-    private void Update(){
-        Contacto contacto = Common.listaContactos.get(id);
-
-        contacto.setFullName(fullNameUp.getText().toString());
-        contacto.setPhoneNumber(phoneNumberUp.getText().toString());
-        contacto.setEmail(EmailUp.getText().toString());
-        contacto.setBirthdayDate(BirthdayUp.getText().toString());
-        contacto.setLatitude(Double.parseDouble(latitudeEdtUp.getText().toString()));
-        contacto.setLongitude(Double.parseDouble(longitudeEdtUp.getText().toString()));
-        contacto.setImg(photo);
-
-        Common.listaContactos.set(id, contacto);
-        Intent intent = new Intent(getApplicationContext(), ListaContactos.class);
-        startActivity(intent);
-    }
+//    private void Update(){
+//        Contacto contacto = Common.listaContactos.get(id);
+//
+//        contacto.setFullName(fullNameUp.getText().toString());
+//        contacto.setPhoneNumber(phoneNumberUp.getText().toString());
+//        contacto.setEmail(EmailUp.getText().toString());
+//        contacto.setBirthdayDate(BirthdayUp.getText().toString());
+//        contacto.setLatitude(Double.parseDouble(latitudeEdtUp.getText().toString()));
+//        contacto.setLongitude(Double.parseDouble(longitudeEdtUp.getText().toString()));
+//        contacto.setImg(photo);
+//
+//        Common.listaContactos.set(id, contacto);
+//        Intent intent = new Intent(getApplicationContext(), ListaContactos.class);
+//        startActivity(intent);
+//    }
 
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
