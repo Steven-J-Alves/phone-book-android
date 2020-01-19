@@ -37,8 +37,6 @@ public class ListaContactos extends AppCompatActivity {
         recyclerView = findViewById(R.id.main_recycler_id);
 
         ContactosDao contactosDao = new ContactosDao(getApplicationContext());
-        Log.d("lll", "INTANCIAR no LISTACONTACT");
-
         ListaContactosAdapter listacontactosadapter = new ListaContactosAdapter(this, contactosDao.getContatos());
 
         recyclerView.setAdapter(listacontactosadapter);

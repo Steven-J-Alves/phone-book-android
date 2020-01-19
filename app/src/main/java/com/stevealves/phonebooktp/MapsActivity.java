@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -13,13 +14,16 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.stevealves.phonebooktp.utils.Common;
@@ -28,7 +32,6 @@ import com.stevealves.phonebooktp.utils.Permissoes;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-
     //Adicionar permissoes
     private String[] permissoes = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -42,14 +45,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     MarkerOptions meuEndereco, contactoEndereco;
 
-    int id;
-    private Double lat;
-    private Double log;
-    private String nome;
-
-    double MyLat;
-    double MyLog;
-
+    private double lat;
+    private double longi;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -65,9 +62,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //marketOptions
-        //meuEndereco = new MarkerOptions().position(new LatLng(lat, log)).title("Endereco de " + nome);
-        //contactoEndereco = new MarkerOptions().position(new LatLng(MyLat, MyLog)).title("Meu Endereco");
     }
 
 
@@ -83,15 +77,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                //Log.d("localizacao", "onLocationChanged: " + location.toString());
-                //Toast.makeText(getApplicationContext(), "hereeeeee", Toast.LENGTH_LONG).show();
+                Log.d("localizacao", "onLocationChanged: " + location.toString());
 
-                Double Mylatitude = location.getLatitude();
-                Double Mylongitude = location.getLongitude();
+                double Mylatitude = location.getLatitude();
+                double Mylongitude = location.getLongitude();
 
                 LatLng meuEndereco = new LatLng(Mylatitude, Mylongitude);
                 mMap.addMarker(new MarkerOptions().position(meuEndereco).title("Meu Endereço"));
-
             }
 
             @Override
@@ -120,17 +112,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             );
         }
 
-        // get contact data by position
-        //getData();
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
 
-        // localizacao do contact
-        LatLng enderecoContact = new LatLng(lat, -log);
-        mMap.addMarker(new MarkerOptions().position(enderecoContact).title("Endereço de " + nome));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(enderecoContact, 10));
+                lat = latLng.latitude;
+                longi = latLng.longitude;
 
-        //create route between me and the conctact
-        //"https://www.journaldev.com/13373/android-google-map-drawing-route-two-points"
+                Toast.makeText(getApplicationContext(), lat + "-" + longi, Toast.LENGTH_SHORT).show();
+
+                // localizacao do contact
+                LatLng enderecoContact = new LatLng(lat, longi);
+
+                mMap.addMarker(new MarkerOptions().position(enderecoContact).title("Endereço do Contacto"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(enderecoContact, 10));
+
+                Intent intent = new Intent(getApplicationContext(), New.class);
+                intent.putExtra("latitude", lat);
+                intent.putExtra("longitude", longi);
+                startActivity(intent);
+            }
+        });
+
+
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -167,13 +173,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         finish();
         // Implementar AlertDialog
     }
-//
-//    public void getData(){
-//        id = getIntent().getIntExtra("id", 0);
-//
-//        lat = Common.listaContactos.get(id).getLatitude();
-//        log = Common.listaContactos.get(id).getLongitude();
-//        nome = Common.listaContactos.get(id).getFullName();
-//    }
 
 }

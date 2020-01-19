@@ -40,8 +40,7 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
     private EditText Birthday;
     private ImageView imgGalery;
 
-    private EditText latitudeEdt;
-    private EditText longitudeEdt;
+    private ImageView map;
 
     private Button btnCancel;
     private Button btnOk;
@@ -62,8 +61,7 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
         Birthday = findViewById(R.id.birthdayId);
         imgGalery = findViewById(R.id.galeryPhotoId);
 
-        latitudeEdt = findViewById(R.id.latitudeId);
-        longitudeEdt = findViewById(R.id.longitudeId);
+        map = findViewById(R.id.mapId);
 
         btnCancel = findViewById(R.id.btnCancelId);
         btnOk = findViewById(R.id.btnOkId);
@@ -95,14 +93,14 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 String phonemunber = phoneNumber.getText().toString();
                 String email = Email.getText().toString();
                 String birthday = Birthday.getText().toString();
-                //Bitmap bitmap = ((BitmapDrawable)imgGalery.getDrawable()).getBitmap();
 
-                double lat = Double.parseDouble(latitudeEdt.getText().toString());
-                double longi = Double.parseDouble(longitudeEdt.getText().toString());
+                /* get lat and long from map click adress */
+                Bundle extras = getIntent().getExtras();
+                double lat = extras.getDouble("latitude", 0);
+                double longi = extras.getDouble("longitude", 0);
 
                 ContactosDao contactosDao = new ContactosDao(getApplicationContext());
                 contactosDao.salvar(new Contacto(fullname, phonemunber, email, birthday, photo, lat, longi));
-                Log.d("lll", "DEPOIS DE INTANCIAR CANTCAO NO NEW e SALVAR CONTACTO");
 
                 Intent intent = new Intent(getApplicationContext(),  ListaContactos.class);
                 startActivity(intent);
@@ -133,6 +131,16 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
                 dialog.create();
                 dialog.show();
+            }
+
+
+        });
+
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(intent);
             }
         });
     }

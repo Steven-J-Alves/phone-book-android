@@ -72,37 +72,22 @@
             android:layout_height="wrap_content">
         </EditText>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/latitudeId"
-                android:hint="Latitude"
-                android:inputType="numberDecimal"
-                android:layout_marginRight="2dp"
-                android:layout_width="110dp"
-                android:gravity="center_horizontal"
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="40dp"
+                android:src="@drawable/ic_add_location_black_24dp"
+                android:id="@+id/mapId"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-            </EditText>
+            </ImageView>
 
-            <EditText
-                android:id="@+id/longitudeId"
-                android:hint="Longitude"
-                android:inputType="numberDecimal"
-                android:layout_width="110dp"
-                android:gravity="center_horizontal"
-                android:layout_height="wrap_content">
-            </EditText>
 
-        </LinearLayout>
 
         <LinearLayout
             android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
