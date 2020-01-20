@@ -72,19 +72,15 @@
             android:layout_height="wrap_content">
         </EditText>
 
-
-
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="40dp"
-                android:src="@drawable/ic_add_location_black_24dp"
-                android:id="@+id/mapId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </ImageView>
-
-
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="40dp"
+            android:src="@drawable/ic_add_location_black_24dp"
+            android:id="@+id/mapId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageView>
 
         <LinearLayout
             android:layout_gravity="center"

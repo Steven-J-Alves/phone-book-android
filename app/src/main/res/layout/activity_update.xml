@@ -69,34 +69,16 @@
             android:layout_height="wrap_content">
         </EditText>
 
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_marginBottom="25dp"
+        <ImageView
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="40dp"
+            android:src="@drawable/ic_add_location_black_24dp"
+            android:id="@+id/mapUpId"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+        </ImageView>
 
-            <EditText
-                android:id="@+id/latitudeUpId"
-                android:hint="Latitude"
-                android:inputType="numberDecimal"
-                android:layout_marginRight="2dp"
-                android:layout_width="110dp"
-                android:gravity="center_horizontal"
-                android:layout_height="wrap_content">
-            </EditText>
-
-            <EditText
-                android:id="@+id/longitudeUpId"
-                android:hint="Longitude"
-                android:inputType="numberDecimal"
-                android:layout_width="110dp"
-                android:gravity="center_horizontal"
-                android:layout_height="wrap_content">
-            </EditText>
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_gravity="center"
@@ -110,7 +92,6 @@
                 android:text="Cancel"
                 android:background="#F44336"
                 android:layout_marginRight="30dp"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </Button>

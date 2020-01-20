@@ -33,15 +33,16 @@ public class ContactosDao {
 
     public List<Contacto> getContatos(){
 
-        Contacto contatos = new Contacto();
         List<Contacto> listaContacto = new ArrayList<>();
 
-        String sql = "SELECT * FROM " + FeedReaderContract.FeedEntry.TABLE_NAME +" ;";
+        String sql = "SELECT * FROM " + FeedReaderContract.FeedEntry.TABLE_NAME + " ;";
         Cursor cursor = db_ler.rawQuery(sql, null);
 
         while (cursor.moveToNext()){
 
-             Long id = cursor.getLong(cursor.getColumnIndex(FeedReaderContract.FeedEntry._ID));
+            Contacto contatos = new Contacto();
+
+            Long id = cursor.getLong(cursor.getColumnIndex(FeedReaderContract.FeedEntry._ID));
              String nome = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NOME));
              String telefone = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_PHONE));
              String email = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_EMAIL));
@@ -98,10 +99,57 @@ public class ContactosDao {
     }
 
     public boolean atualizar(Contacto contacto){
-        return false;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        Bitmap bitmap = contacto.getImg();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] imagem = stream.toByteArray();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("nome", contacto.getFullName());
+        contentValues.put("telefone", contacto.getPhoneNumber());
+        contentValues.put("email", contacto.getEmail());
+        contentValues.put("dataNasc", contacto.getBirthdayDate());
+        contentValues.put("foto", imagem);
+        try {
+            String[] ids = {contacto.getId().toString()};
+            db_escrever.update(FeedReaderContract.FeedEntry.TABLE_NAME, contentValues, "id=?", ids);
+            Log.i("INFO", "Contato Atualizado com sucesso");
+        } catch (Exception e) {
+            Log.e("INFO", "Erro ao Atualizar contato" + e.getMessage());
+            return false;
+        }
+
+        return true;
     }
 
     public boolean delete(Contacto contacto){
-        return false;
+//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        Bitmap bitmap = contatosUsuarios.getImagemUsuario();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+//        byte[] imagem = stream.toByteArray();
+//
+//        ContentValues contentValues = new ContentValues();
+//
+//        contentValues.put("nome", contatosUsuarios.getNomeUsuario());
+//        contentValues.put("telefone", contatosUsuarios.getTelefoneUsuario());
+//        contentValues.put("email", contatosUsuarios.getEmailUsuario());
+//        contentValues.put("dataNasc", contatosUsuarios.getDatanascimento());
+//        contentValues.put("foto", imagem);
+//        try {
+//
+//            String[] ids = {contatosUsuarios.getID().toString()};
+//            escreve.delete(DbContatosUsuarios.TABELA_CONTATOS,"id=?",ids);
+//            Log.i("INFO", "Contato " + contatosUsuarios.getNomeUsuario() + " Deletado com sucesso");
+//
+//
+//
+//        } catch (Exception e) {
+//            Log.e("INFO", "Erro ao Deletar contato" + e.getMessage());
+//            return false;
+//        }
+//
+//
+        return true;
     }
 }
