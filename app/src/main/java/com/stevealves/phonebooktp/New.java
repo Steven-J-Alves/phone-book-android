@@ -104,6 +104,8 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
                 Intent intent = new Intent(getApplicationContext(),  ListaContactos.class);
                 startActivity(intent);
+
+                Toast.makeText(getApplicationContext(), lat + "-" + longi, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -125,6 +127,8 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getApplicationContext(), ListaContactos.class);
+                                startActivity(intent);
                                 finish();
                             }
                         });
@@ -132,7 +136,6 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 dialog.create();
                 dialog.show();
             }
-
 
         });
 
@@ -143,6 +146,7 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 startActivity(intent);
             }
         });
+
     }
 
     //galeria
@@ -177,6 +181,16 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         );
+
+        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_NEGATIVE) {
+                    dialog.dismiss();
+                    onBackPressed();
+                }
+            }
+        });
+
         datePickerDialog.show();
     }
 
@@ -185,5 +199,36 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
         month = month + 1;
         String data = dayOfMonth + "/" + month + "/" + year;
         Birthday.setText(data);
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i("kkk", "onSaveInstanceState");
+
+        savedInstanceState.putString("fullName", fullName.getText().toString());
+        //savedInstanceState.putInt("phoneNumber", 25);
+        savedInstanceState.putString("email", Email.getText().toString());
+        savedInstanceState.putString("birthay", Birthday.getText().toString());
+        //Bitmap bitmap = ((BitmapDrawable) imgGalery.getDrawable()).getBitmap();
+        //savedInstanceState.putParcelable("photo", bitmap);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.i("kkk", "onRestoreInstanceState");
+
+        String nome = savedInstanceState.getString("fullName");
+        int phonenumber = savedInstanceState.getInt("phoneNumber");
+        String email = savedInstanceState.getString("email");
+        String birtday = savedInstanceState.getString("birthay");
+        //Bitmap bmp = savedInstanceState.getParcelable("bitmap");
+        //savedInstanceState.putParcelable("photo", bmp);
+
+        fullName.setText(nome);
+        Email.setText(email);
+        Birthday.setText(birtday);
     }
 }

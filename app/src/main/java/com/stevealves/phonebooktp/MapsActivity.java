@@ -32,10 +32,9 @@ import com.stevealves.phonebooktp.utils.Permissoes;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+
     //Adicionar permissoes
-    private String[] permissoes = new String[]{
-            Manifest.permission.ACCESS_FINE_LOCATION
-    };
+    private String[] permissoes = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
 
     //
     private LocationManager locationManager;
@@ -43,10 +42,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //conf location listener para ouvir as atualiazoes da localizacao do usuario
     private LocationListener locationListener;
 
-    MarkerOptions meuEndereco, contactoEndereco;
-
     private double lat;
     private double longi;
+
+    private double Mylatitude;
+    private double Mylongitude;
+
+    Intent intent;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -79,11 +81,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onLocationChanged(Location location) {
                 Log.d("localizacao", "onLocationChanged: " + location.toString());
 
-                double Mylatitude = location.getLatitude();
-                double Mylongitude = location.getLongitude();
-
-                LatLng meuEndereco = new LatLng(Mylatitude, Mylongitude);
-                mMap.addMarker(new MarkerOptions().position(meuEndereco).title("Meu Endereço"));
+                 Mylatitude = location.getLatitude();
+                 Mylongitude = location.getLongitude();
             }
 
             @Override
@@ -115,7 +114,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-
                 lat = latLng.latitude;
                 longi = latLng.longitude;
 
@@ -125,18 +123,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng enderecoContact = new LatLng(lat, longi);
 
                 mMap.addMarker(new MarkerOptions().position(enderecoContact).title("Endereço do Contacto"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(enderecoContact, 10));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(enderecoContact, 4));
 
-                Intent intent = new Intent(getApplicationContext(), New.class);
+                intent = new Intent(getApplicationContext(), New.class);
                 intent.putExtra("latitude", lat);
                 intent.putExtra("longitude", longi);
-                startActivity(intent);
             }
         });
 
-
+        LatLng meuEndereco = new LatLng(Mylatitude, Mylongitude);
+        mMap.addMarker(new MarkerOptions().position(meuEndereco).title("Meu Endereço"));
     }
 
+    @Override
+    public void onBackPressed() {
+//        if (intent == null) {
+//            intent = new Intent(getApplicationContext(), New.class);
+//        }
+        startActivity(intent);
+
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
