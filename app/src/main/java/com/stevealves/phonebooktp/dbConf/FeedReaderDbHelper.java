@@ -30,12 +30,9 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("lll", "DENTRO DO ONCREATE DB");
         try {
             db.execSQL(SQL_CREATE_ENTRIES);
-            Log.d("lll", "Base dados criado");
         } catch (Exception e) {
-            Log.d("lll", "Erro ao criar base de dados" + e.getMessage());
         }
     }
 
@@ -46,9 +43,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         try {
             db.execSQL(SQL_DELETE_ENTRIES);
             onCreate(db);
-            Log.d("lll", "Tabela criada com sucesso");
         } catch (Exception e) {
-            Log.d("lll", "Erro ao criar tabela" + e.getMessage());
         }
     }
 
