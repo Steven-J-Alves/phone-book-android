@@ -54,7 +54,7 @@
                 android:id="@+id/trash_fav_custum_view_id"
                 android:src="@drawable/ic_delete_black_24dp"
                 android:layout_width="40dp"
-                android:layout_marginLeft="200dp"
+                android:layout_marginLeft="250dp"
                 android:layout_marginTop="-20dp"
                 android:layout_height="40dp">
             </ImageView>

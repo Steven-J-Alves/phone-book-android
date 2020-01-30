@@ -14,10 +14,9 @@ public class Contacto implements Serializable {
 
     private Double latitude;
     private Double longitude;
+    private int id;
 
-    private Long id;
-
-    private Boolean isFavorite = false;
+    private int isFavorite = 0;
 
     public Contacto(String fullName, String phoneNumber, String email, String birthdayDate, Bitmap img, double latitude, double longitude) {
 
@@ -32,19 +31,19 @@ public class Contacto implements Serializable {
 
     public Contacto(){}
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public Boolean getFavorite() {
+    public int getFavorite() {
         return isFavorite;
     }
 
-    public void setFavorite(Boolean favorite) {
+    public void setFavorite(int favorite) {
         isFavorite = favorite;
     }
 

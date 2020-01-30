@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -48,7 +50,7 @@
             android:parentActivityName=".ListaContactos" />
         <activity
             android:name=".New"
-            android:label="New"
+
             android:parentActivityName=".ListaContactos" />
         <activity android:name=".ListaContactos" />
         <activity android:name=".MainActivity">

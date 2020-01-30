@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stevealves.phonebooktp.DAO.ContactosDao;
@@ -27,8 +29,6 @@ public class ListaContactos extends AppCompatActivity {
 
     static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
 
-    public static List<Contacto> listaContacto = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +37,9 @@ public class ListaContactos extends AppCompatActivity {
         recyclerView = findViewById(R.id.main_recycler_id);
 
         ContactosDao contactosDao = new ContactosDao(getApplicationContext());
-        ListaContactosAdapter listacontactosadapter = new ListaContactosAdapter(this, contactosDao.getContatos());
+
+        Common.listaContactos = contactosDao.getContatos();
+        ListaContactosAdapter listacontactosadapter = new ListaContactosAdapter(this);
 
         recyclerView.setAdapter(listacontactosadapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -49,6 +51,7 @@ public class ListaContactos extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), New.class);
                 startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
+                finish();
             }
         });
     }
@@ -59,18 +62,23 @@ public class ListaContactos extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.main_settings_action_bar_id:
-//                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
-//                return true;
-//            case R.id.main_favorite_action_bar_id:
-//                Intent intent = new Intent(getApplicationContext(), Favorite.class);
-//                startActivity(intent);
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.main_settings_action_bar_id:
+                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                return true;
+            case R.id.main_favorite_action_bar_id:
+                Intent intent = new Intent(getApplicationContext(), Favorite.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

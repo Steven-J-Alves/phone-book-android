@@ -10,10 +10,6 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by jamiltondamasceno
- */
-
 public class Permissoes {
 
     public static boolean validarPermissoes(String[] permissoes, Activity activity, int requestCode){
@@ -37,7 +33,6 @@ public class Permissoes {
 
             //Solicita permissão
             ActivityCompat.requestPermissions(activity, novasPermissoes, requestCode );
-
 
         }
 

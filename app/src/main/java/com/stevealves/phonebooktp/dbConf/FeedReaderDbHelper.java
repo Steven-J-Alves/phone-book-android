@@ -1,4 +1,4 @@
-package com.stevealves.phonebooktp.conf;
+package com.stevealves.phonebooktp.dbConf;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,11 +14,12 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + FeedReaderContract.FeedEntry.TABLE_NAME + " (" +
                     FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     FeedReaderContract.FeedEntry.COLUMN_NOME + " TEXT, " +
-                    FeedReaderContract.FeedEntry.COLUMN_PHONE + " INTEGER , " +
+                    FeedReaderContract.FeedEntry.COLUMN_PHONE + " INTEGER, " +
                     FeedReaderContract.FeedEntry.COLUMN_EMAIL + " TEXT, " +
                     FeedReaderContract.FeedEntry.COLUMN_BIRTHDAY + " TEXT, " +
                     FeedReaderContract.FeedEntry.COLUMN_PHOTO + " BLOB," +
                     FeedReaderContract.FeedEntry.COLUMN_LATITUDE + " DOUBLE, " +
+                    FeedReaderContract.FeedEntry.COLUMN_FAV + " BOOLEAN, " +
                     FeedReaderContract.FeedEntry.COLUMN_LONGITUDE + " DOUBLE )";
 
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + FeedReaderContract.FeedEntry.TABLE_NAME;

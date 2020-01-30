@@ -33,21 +33,19 @@ import java.io.InputStream;
 
 public class New extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    // Views
     private EditText fullName;
     private EditText phoneNumber;
     private EditText Email;
     private EditText Birthday;
     private ImageView imgGalery;
-
     private ImageView map;
-
     private Button btnCancel;
     private Button btnOk;
-
     private AlertDialog.Builder dialog;
 
     Bitmap photo;
+
+    String name;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -60,9 +58,7 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
         Email = findViewById(R.id.emailId);
         Birthday = findViewById(R.id.birthdayId);
         imgGalery = findViewById(R.id.galeryPhotoId);
-
         map = findViewById(R.id.mapId);
-
         btnCancel = findViewById(R.id.btnCancelId);
         btnOk = findViewById(R.id.btnOkId);
 
@@ -84,7 +80,6 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
-        //SAVE CONTACT
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,8 +91,9 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
                 /* get lat and long from map click adress */
                 Bundle extras = getIntent().getExtras();
-                double lat = extras.getDouble("latitude", 0);
-                double longi = extras.getDouble("longitude", 0);
+
+                double lat = extras.getDouble("latitude");
+                double longi = extras.getDouble("longitude");
 
                 ContactosDao contactosDao = new ContactosDao(getApplicationContext());
                 contactosDao.salvar(new Contacto(fullname, phonemunber, email, birthday, photo, lat, longi));
@@ -105,8 +101,6 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 Intent intent = new Intent(getApplicationContext(),  ListaContactos.class);
                 startActivity(intent);
 
-                Toast.makeText(getApplicationContext(), lat + "-" + longi, Toast.LENGTH_SHORT).show();
-                finish();
             }
         });
 
@@ -149,7 +143,6 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     }
 
-    //galeria
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
@@ -171,7 +164,6 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
         }
     }
 
-    // Date Picket Configuration
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void showDatePickerDialog(){
         DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -181,16 +173,6 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         );
-
-        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == DialogInterface.BUTTON_NEGATIVE) {
-                    dialog.dismiss();
-                    onBackPressed();
-                }
-            }
-        });
-
         datePickerDialog.show();
     }
 
@@ -199,36 +181,5 @@ public class New extends AppCompatActivity implements DatePickerDialog.OnDateSet
         month = month + 1;
         String data = dayOfMonth + "/" + month + "/" + year;
         Birthday.setText(data);
-
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        Log.i("kkk", "onSaveInstanceState");
-
-        savedInstanceState.putString("fullName", fullName.getText().toString());
-        //savedInstanceState.putInt("phoneNumber", 25);
-        savedInstanceState.putString("email", Email.getText().toString());
-        savedInstanceState.putString("birthay", Birthday.getText().toString());
-        //Bitmap bitmap = ((BitmapDrawable) imgGalery.getDrawable()).getBitmap();
-        //savedInstanceState.putParcelable("photo", bitmap);
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        Log.i("kkk", "onRestoreInstanceState");
-
-        String nome = savedInstanceState.getString("fullName");
-        int phonenumber = savedInstanceState.getInt("phoneNumber");
-        String email = savedInstanceState.getString("email");
-        String birtday = savedInstanceState.getString("birthay");
-        //Bitmap bmp = savedInstanceState.getParcelable("bitmap");
-        //savedInstanceState.putParcelable("photo", bmp);
-
-        fullName.setText(nome);
-        Email.setText(email);
-        Birthday.setText(birtday);
     }
 }

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapRegionDecoder;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.stevealves.phonebooktp.DAO.ContactosDao;
 import com.stevealves.phonebooktp.model.Contacto;
 import com.stevealves.phonebooktp.utils.Common;
 
@@ -30,26 +32,24 @@ public class Update extends AppCompatActivity {
     private EditText EmailUp;
     private EditText BirthdayUp;
     private ImageView imgGaleryUp;
+    private ImageView mapUp;
 
-    private EditText latitudeEdtUp;
-    private EditText longitudeEdtUp;
-
-    private Button btnCancelUpdate;
-    private Button btnUpdate;
-
-    private AlertDialog.Builder dialog;
+    Button btnCancelUpdate;
+    Button btnUpdate;
 
     //to get and set
+    int position;
+    int id;
+
     String fullname;
     String phonemunber;
     String email;
     String birthday;
     Bitmap photo;
+    double lat;
+    double log;
 
-    String lat;
-    String log;
-
-    int id;
+    private AlertDialog.Builder dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +61,7 @@ public class Update extends AppCompatActivity {
         EmailUp = findViewById(R.id.emailIdUp);
         BirthdayUp = findViewById(R.id.birthdayIdUp);
         imgGaleryUp = findViewById(R.id.galeryPhotoIdUp);
-
-        latitudeEdtUp = findViewById(R.id.latitudeUpId);
-        longitudeEdtUp = findViewById(R.id.longitudeUpId);
-
+        mapUp = findViewById(R.id.mapUpId);
         btnCancelUpdate = findViewById(R.id.btnCancelUpdateId);
         btnUpdate = findViewById(R.id.btnUpdateId);
 
@@ -74,24 +71,21 @@ public class Update extends AppCompatActivity {
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, 0);
-
             }
         });
 
-        getData();
-        setData();
+        getData_setData();
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Update();
+                Updates();
             }
         });
 
         btnCancelUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 dialog = new AlertDialog.Builder(Update.this);
 
                 dialog.setMessage("Deseja Cancelar?");
@@ -115,54 +109,74 @@ public class Update extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+        mapUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // recuperar info lat e
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
+    public void getData_setData(){
+        Intent intent = getIntent();
+        position = intent.getIntExtra("position", 0);
 
-    private void getData(){
-        id = getIntent().getIntExtra("id", 0);
-//
-//        fullname = Common.listaContactos.get(id).getFullName();
-//        phonemunber = Common.listaContactos.get(id).getPhoneNumber();
-//        email = Common.listaContactos.get(id).getEmail();
-//        birthday = Common.listaContactos.get(id).getBirthdayDate();
-//        photo = Common.listaContactos.get(id).getImg();
-//
-//        lat = Common.listaContactos.get(id).getLatitude().toString();
-//        log = Common.listaContactos.get(id).getLongitude().toString();
+        Contacto contacto = new Contacto();
 
-    }
+        contacto = Common.listaContactos.get(position);
+        id = contacto.getId();
 
-    private void setData(){
+        //Toast.makeText(getApplicationContext(), ""+id+" "+position, Toast.LENGTH_SHORT).show();
+
+        fullname = contacto.getFullName();
+        phonemunber = contacto.getPhoneNumber();
+        email = contacto.getEmail();
+        birthday = contacto.getBirthdayDate();
+        photo = contacto.getImg();
+        lat = contacto.getLatitude();
+        log = contacto.getLongitude();
+
+
         fullNameUp.setText(fullname);
         phoneNumberUp.setText(phonemunber);
         EmailUp.setText(email);
-        BirthdayUp.setText(birthday);
+        BirthdayUp.setText(contacto.getBirthdayDate());
+        imgGaleryUp.setImageBitmap(photo);
 
 //        if(Common.listaContactos.get(id).getImg() != null){
 //            imgGaleryUp.setImageBitmap(photo);
 //        } else {
 //            imgGaleryUp.setImageResource(R.drawable.ic_camera_alt_black_24dp);
 //        }
-
-        latitudeEdtUp.setText(lat);
-        longitudeEdtUp.setText(log);
     }
 
-//    private void Update(){
-//        Contacto contacto = Common.listaContactos.get(id);
-//
-//        contacto.setFullName(fullNameUp.getText().toString());
-//        contacto.setPhoneNumber(phoneNumberUp.getText().toString());
-//        contacto.setEmail(EmailUp.getText().toString());
-//        contacto.setBirthdayDate(BirthdayUp.getText().toString());
-//        contacto.setLatitude(Double.parseDouble(latitudeEdtUp.getText().toString()));
-//        contacto.setLongitude(Double.parseDouble(longitudeEdtUp.getText().toString()));
-//        contacto.setImg(photo);
-//
-//        Common.listaContactos.set(id, contacto);
-//        Intent intent = new Intent(getApplicationContext(), ListaContactos.class);
-//        startActivity(intent);
-//    }
+
+    private void Updates(){
+        /* get lat and long from map click update adress */
+//        Bundle extras = getIntent().getExtras();
+        double latt = 25.25;
+        double longi = 2525.2;
+
+        Contacto con = new Contacto();
+
+        con.setId(id);
+        con.setFullName(fullNameUp.getText().toString());
+        con.setPhoneNumber(phoneNumberUp.getText().toString());
+        con.setEmail(EmailUp.getText().toString());
+        con.setBirthdayDate(BirthdayUp.getText().toString());
+        con.setImg(photo);
+        con.setLatitude(latt);
+        con.setLongitude(longi);
+
+        ContactosDao contactosDao = new ContactosDao(getApplicationContext());
+        contactosDao.atualizar(con);
+
+        Intent intent = new Intent(getApplicationContext(), ListaContactos.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {

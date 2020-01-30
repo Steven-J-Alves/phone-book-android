@@ -7,6 +7,6 @@ import java.util.List;
 
 public class Common {
 
-    //public static List<Contacto> listaContactos = new ArrayList<>();
+    public static List<Contacto> listaContactos = new ArrayList<>();
 
 }

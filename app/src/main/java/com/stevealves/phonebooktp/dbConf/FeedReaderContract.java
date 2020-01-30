@@ -1,4 +1,4 @@
-package com.stevealves.phonebooktp.conf;
+package com.stevealves.phonebooktp.dbConf;
 
 import android.provider.BaseColumns;
 
@@ -20,6 +20,7 @@ public class FeedReaderContract {
         public static final String COLUMN_PHOTO = "photo";
         public static final String COLUMN_LATITUDE= "latitude";
         public static final String COLUMN_LONGITUDE = "longitude";
+        public static final String COLUMN_FAV= "favorite";
 
     }
 

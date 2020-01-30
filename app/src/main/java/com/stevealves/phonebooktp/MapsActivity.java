@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
+import com.stevealves.phonebooktp.model.Contacto;
 import com.stevealves.phonebooktp.utils.Common;
 import com.stevealves.phonebooktp.utils.Permissoes;
 
@@ -42,13 +43,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //conf location listener para ouvir as atualiazoes da localizacao do usuario
     private LocationListener locationListener;
 
+    // contact address
     private double lat;
     private double longi;
 
     private double Mylatitude;
     private double Mylongitude;
 
-    Intent intent;
+    Intent intent, intent2;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -65,7 +67,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -114,14 +115,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+                // endereco contacto
                 lat = latLng.latitude;
                 longi = latLng.longitude;
-
-                Toast.makeText(getApplicationContext(), lat + "-" + longi, Toast.LENGTH_SHORT).show();
-
                 // localizacao do contact
                 LatLng enderecoContact = new LatLng(lat, longi);
-
                 mMap.addMarker(new MarkerOptions().position(enderecoContact).title("Endereço do Contacto"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(enderecoContact, 4));
 
@@ -133,15 +131,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         LatLng meuEndereco = new LatLng(Mylatitude, Mylongitude);
         mMap.addMarker(new MarkerOptions().position(meuEndereco).title("Meu Endereço"));
+
+        Intent intent = getIntent();
+        int position = intent.getIntExtra("position",-1);
+
+        if(position >= 0) {
+            try {
+                intent2 = new Intent(getApplicationContext(), ListaContactos.class);
+                Contacto contacto = Common.listaContactos.get(position);
+                double latit = contacto.getLatitude();
+                double longit = contacto.getLongitude();
+
+                LatLng upce = new LatLng(latit, longit);
+                mMap.addMarker(new MarkerOptions().position(upce).title("Endereço de: " + contacto.getFullName()));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(upce, 4));
+            } catch (Exception e) {}
+        }
     }
 
     @Override
     public void onBackPressed() {
-//        if (intent == null) {
-//            intent = new Intent(getApplicationContext(), New.class);
-//        }
+        //intent = new Intent(getApplicationContext(), New.class);
         startActivity(intent);
-
+        if(intent2 != null){
+            startActivity(intent2);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
