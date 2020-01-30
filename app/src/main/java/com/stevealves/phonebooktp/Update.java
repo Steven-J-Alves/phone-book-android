@@ -129,8 +129,6 @@ public class Update extends AppCompatActivity {
         contacto = Common.listaContactos.get(position);
         id = contacto.getId();
 
-        //Toast.makeText(getApplicationContext(), ""+id+" "+position, Toast.LENGTH_SHORT).show();
-
         fullname = contacto.getFullName();
         phonemunber = contacto.getPhoneNumber();
         email = contacto.getEmail();
@@ -138,7 +136,6 @@ public class Update extends AppCompatActivity {
         photo = contacto.getImg();
         lat = contacto.getLatitude();
         log = contacto.getLongitude();
-
 
         fullNameUp.setText(fullname);
         phoneNumberUp.setText(phonemunber);
